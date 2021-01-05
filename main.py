@@ -15,6 +15,7 @@ def main():
     print('The table below summarizes the distribution of new born birthweights:',
           '\n\n',
           get_descriptive_stats(df, 'bweight'))
+    df = column_cutter(df)
 
 
 def birth_weight_loader():
@@ -33,3 +34,31 @@ def get_descriptive_stats(dataframe, column):
     descriptive_stats = df[column].describe()
 
     return descriptive_stats
+
+
+def column_cutter(dataframe):
+    """XX"""
+
+    df = dataframe.copy()
+
+    bins = [
+        1329.9,
+        1358.25,
+        1386.6,
+        1414.95,
+        1443.3,
+        1471.65,
+        1500,
+        1528.35,
+        1556.7,
+        1585.05,
+        1613.4,
+        1641.75,
+        1670.1,
+    ]
+    labels = []
+    df['bweight_bins'] = pd.cut(df['bweight'], bins=bins, right=False)
+
+    return df
+
+    grouped = df.groupby('bweight_bins').agg({'agedth5': 'mean'}).reset_index()
