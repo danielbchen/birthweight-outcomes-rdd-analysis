@@ -98,3 +98,12 @@ def plotter(dataframe, x, y, title, x_axis_label, y_axis_label):
     )
     
     return plot
+
+
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+
+ax.scatter(mortality_summary['bweight_bins'].astype(str), 
+           mortality_summary['agedth5'])
+ax.axvline(5.5, color='k', linestyle='solid')
