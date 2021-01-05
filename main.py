@@ -11,6 +11,10 @@ def main():
     """
 
     df = birth_weight_loader()
+    print('\n\n')
+    print('The table below summarizes the distribution of new born birthweights:',
+          '\n\n',
+          get_descriptive_stats(df))
 
 
 def birth_weight_loader():
@@ -20,3 +24,12 @@ def birth_weight_loader():
     df = pd.read_stata(data_path)
 
     return df 
+
+
+def get_descriptive_stats(dataframe):
+    """"""
+
+    df = dataframe.copy()
+    descriptive_stats = df['bweight'].describe()
+
+    return descriptive_stats
