@@ -37,7 +37,7 @@ def get_descriptive_stats(dataframe, column):
 
 
 def column_cutter(dataframe):
-    """XX"""
+    """Groups birth weight column into bins."""
 
     df = dataframe.copy()
 
@@ -56,7 +56,6 @@ def column_cutter(dataframe):
         1641.75,
         1670.1,
     ]
-    labels = []
     df['bweight_bins'] = pd.cut(df['bweight'], bins=bins, right=False)
 
     return df
