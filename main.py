@@ -10,12 +10,18 @@ def main():
     """
     """
 
-    df = birth_weight_loader()
+    # Loads in data
+    df = birth_weight_loader() 
     print('\n\n')
+    # Returns descriptive stats
     print('The table below summarizes the distribution of new born birthweights:',
           '\n\n',
           get_descriptive_stats(df, 'bweight'))
+    # Cuts birth weight column into bins
     df = column_cutter(df)
+    # Groups/summarizes mortality data for plotting
+    mortality_aggregations = {'agedth5': 'mean', 'agedth4': 'mean'}
+    mortality_summary = data_grouper(df, 'bweight_bins', mortality_aggregations)
 
 
 def birth_weight_loader():
@@ -60,4 +66,13 @@ def column_cutter(dataframe):
 
     return df
 
-    grouped = df.groupby('bweight_bins').agg({'agedth5': 'mean'}).reset_index()
+
+def data_grouper(dataframe, grouper_col, agg_dict):
+    """Returns a new dataframe with original data grouped by specified 
+    arguments.
+    """
+
+    df = dataframe.copy()
+    grouped_df = df.groupby(grouper_col).agg(agg_dict).reset_index()
+
+    return grouped_df
