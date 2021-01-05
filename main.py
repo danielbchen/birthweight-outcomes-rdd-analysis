@@ -1,7 +1,8 @@
 import numpy as np
 import os
 import pandas as pd
-from plotnine import ggplot, geom_point, aes, theme, element_text, labs  # pip install plotnine
+# pip install plotnine
+from plotnine import ggplot, geom_point, aes, theme, element_text, labs, geom_vline
 import statsmodels.formula.api as smf
 
 
@@ -92,7 +93,8 @@ def plotter(dataframe, x, y, title, x_axis_label, y_axis_label):
             theme(axis_text_x=element_text(rotation=50, hjust=1)) +
             labs(title=title,
                  x=x_axis_label,
-                 y=y_axis_label)
-            )
+                 y=y_axis_label) +
+            geom_vline(xintercept=6.5, size=2)
+    )
     
     return plot
