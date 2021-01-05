@@ -14,7 +14,7 @@ def main():
     print('\n\n')
     print('The table below summarizes the distribution of new born birthweights:',
           '\n\n',
-          get_descriptive_stats(df))
+          get_descriptive_stats(df, 'bweight'))
 
 
 def birth_weight_loader():
@@ -26,10 +26,10 @@ def birth_weight_loader():
     return df 
 
 
-def get_descriptive_stats(dataframe):
-    """"""
+def get_descriptive_stats(dataframe, column):
+    """Returns descriptive statistics for a specified column in dataframe."""
 
     df = dataframe.copy()
-    descriptive_stats = df['bweight'].describe()
+    descriptive_stats = df[column].describe()
 
     return descriptive_stats
