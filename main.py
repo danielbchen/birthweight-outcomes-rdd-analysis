@@ -1,7 +1,7 @@
 import numpy as np
 import os
 import pandas as pd
-import plotnine #pip install plotnine 
+from plotnine import ggplot, geom_point, aes, theme, element_text, labs  # pip install plotnine
 import statsmodels.formula.api as smf
 
 
@@ -22,6 +22,11 @@ def main():
     # Groups/summarizes mortality data for plotting
     mortality_aggregations = {'agedth5': 'mean', 'agedth4': 'mean'}
     mortality_summary = data_grouper(df, 'bweight_bins', mortality_aggregations)
+    # Plot mortality rates by birth weight
+    plotter(mortality_summary, 'bweight_bins', 'agedth5',
+            'Mean One-Year Mortality Rate by Birth Weight',
+            'Birth Weight Bin (Grams)',
+            'Mortality Rate')
 
 
 def birth_weight_loader():
@@ -76,3 +81,18 @@ def data_grouper(dataframe, grouper_col, agg_dict):
     grouped_df = df.groupby(grouper_col).agg(agg_dict).reset_index()
 
     return grouped_df
+
+
+def plotter(dataframe, x, y, title, x_axis_label, y_axis_label):
+    """Returns a scatter plot using specified data parameters."""
+
+    df = dataframe.copy()
+    plot = (ggplot(df, aes(x, y)) +
+            geom_point() +
+            theme(axis_text_x=element_text(rotation=50, hjust=1)) +
+            labs(title=title,
+                 x=x_axis_label,
+                 y=y_axis_label)
+            )
+    
+    return plot
