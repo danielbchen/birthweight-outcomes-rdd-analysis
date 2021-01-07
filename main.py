@@ -2,9 +2,9 @@ import numpy as np
 import os
 import pandas as pd
 # pip install plotnine
-from plotnine import ggplot, geom_point, aes, theme, element_text, labs, geom_vline, ggsave, facet_wrap
-import statsmodels.formula.api as smf
 import plotnine as p9
+import statsmodels.formula.api as smf
+
 
 
 path = os.path.dirname(os.path.abspath("__file__"))
@@ -89,16 +89,16 @@ def plotter(dataframe, x, y, title, x_axis_label, y_axis_label):
     """Returns a scatter plot using specified data parameters."""
 
     df = dataframe.copy()
-    plot = (ggplot(df, aes(x, y)) +
-            geom_point() +
-            theme(axis_text_x=element_text(rotation=50, hjust=1)) +
-            labs(title=title,
-                 x=x_axis_label,
-                 y=y_axis_label) +
-            geom_vline(xintercept=6.5, size=2)
+    plot = (p9.ggplot(df, p9.aes(x, y)) +
+            p9.geom_point() +
+            p9.theme(axis_text_x=p9.element_text(rotation=50, hjust=1)) +
+            p9.labs(title=title,
+                    x=x_axis_label,
+                    y=y_axis_label) +
+            p9.geom_vline(xintercept=6.5, size=2)
     )
     
-    ggsave(plot=plot, filename='{}.png'.format(title), dpi=1000)
+    p9.ggsave(plot=plot, filename='{}.png'.format(title), dpi=1000)
 
 
 
