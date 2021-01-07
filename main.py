@@ -62,6 +62,7 @@ def main():
             'Birth Weight Bin (Grams)',
             'Mean Year of Birth')
 
+
 def birth_weight_loader():
     """Loads in stata file containg birth weight data."""
 
@@ -133,6 +134,16 @@ def plotter(dataframe, x, y, title, x_axis_label, y_axis_label):
     #p9.ggsave(plot=plot, filename='{}.png'.format(title), dpi=1000)
 
 
+def regression_column_creator(dataframe):
+    """Derives new columns that will be used as regressors for OLS."""
 
+    df = dataframe.copy()
 
+    df['alpha_1'] = [0 if weight >= 1500 else 1 for weight in df['bweight']]
+    df['threshold_distance'] = df['bweight'] - 1500
+    df['alpha_2'] = df['VLBW'] * df['threshold_distance']
+    df['alpha_3'] = (1 - df['alpha_1']) * df['threshold_distance']
 
+    return df
+
+df = regression_column_creator(df)
