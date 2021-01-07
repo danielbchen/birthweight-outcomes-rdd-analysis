@@ -33,7 +33,34 @@ def main():
             'Mean 28-Day Mortality Rate by Birth Weight',
             'Birth Weight Bin (Grams)',
             'Mortality Rate')
+    # Plot background covariates against birth weight
+    background_covariates = ['mom_age', 'mom_ed1', 'gest', 'nprenatal', 'yob']
+    summary_stat = [['mean'] * 5]
+    summary_stat = [mean for sublist in summary_stat for mean in sublist]
+    background_aggregations = dict(zip(background_covariates, summary_stat))
+    background_summary = data_grouper(
+        df, 'bweight_bins', background_aggregations)
 
+    plotter(background_summary, 'bweight_bins', 'mom_age',
+            'Mean Age of Mother by Birth Weight',
+            'Birth Weight Bin (Grams)',
+            'Age of Mother')
+    plotter(background_summary, 'bweight_bins', 'mom_ed1',
+            'Mother Edu Less than HS by Birth Weight',
+            'Birth Weight Bin (Grams)',
+            'Mother Edu')
+    plotter(background_summary, 'bweight_bins', 'gest',
+            'Mean Gestational Age by Birth Weight',
+            'Birth Weight Bin (Grams)',
+            'Mean Gestational Age')
+    plotter(background_summary, 'bweight_bins', 'nprenatal',
+            'Mean Number of Prenatal Care Visits by Birth Weight',
+            'Birth Weight Bin (Grams)',
+            'Mean Number of Prenatal Visits Age')
+    plotter(background_summary, 'bweight_bins', 'yob',
+            'Mean Birth Year by Birth Weight',
+            'Birth Weight Bin (Grams)',
+            'Mean Year of Birth')
 
 def birth_weight_loader():
     """Loads in stata file containg birth weight data."""
@@ -102,7 +129,8 @@ def plotter(dataframe, x, y, title, x_axis_label, y_axis_label):
             p9.geom_vline(xintercept=6.5, size=2)
     )
     
-    p9.ggsave(plot=plot, filename='{}.png'.format(title), dpi=1000)
+    return plot
+    #p9.ggsave(plot=plot, filename='{}.png'.format(title), dpi=1000)
 
 
 
