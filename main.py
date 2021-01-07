@@ -61,6 +61,9 @@ def main():
             'Mean Birth Year by Birth Weight',
             'Birth Weight Bin (Grams)',
             'Mean Year of Birth')
+    # Run OLS on background characteristics
+    df = regression_column_creator(df)
+    smoothness_test_df = background_ols(df)
 
 
 def birth_weight_loader():
@@ -141,9 +144,24 @@ def regression_column_creator(dataframe):
 
     df['alpha_1'] = [0 if weight >= 1500 else 1 for weight in df['bweight']]
     df['threshold_distance'] = df['bweight'] - 1500
-    df['alpha_2'] = df['VLBW'] * df['threshold_distance']
-    df['alpha_3'] = (1 - df['alpha_1']) * df['threshold_distance']
+    df['alpha_2'] = df['alpha_1'] * df['threshold_distance']
+    df['alpha_3'] = (1 - df['alpha_1']) * (df['threshold_distance'])
 
     return df
 
-df = regression_column_creator(df)
+
+def background_ols(dataframe):
+    """Runs OLS on background covariates to test for smoothness. Returns a 
+    dataframe with parameters from regression output.
+    """
+
+    df = dataframe.copy()
+
+    df = df[(df['threshold_distance'] >= -85) & (df['threshold_distance'] <= 85)]
+    
+    background_covariates = ['mom_age', 'mom_ed1', 'gest', 'nprenatal', 'yob']
+    right_hand_side = ' ~ alpha_1 + alpha_2 + alpha_3'
+    formulas = [var + right_hand_side for var in background_covariates]
+
+    regressions = [smf.ols(formula=formula, data=df).fit() for formula in formulas]
+    [regression.summary() for regression in regressions]
