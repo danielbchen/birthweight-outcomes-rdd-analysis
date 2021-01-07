@@ -2,7 +2,7 @@ import numpy as np
 import os
 import pandas as pd
 # pip install plotnine
-from plotnine import ggplot, geom_point, aes, theme, element_text, labs, geom_vline, ggsave
+from plotnine import ggplot, geom_point, aes, theme, element_text, labs, geom_vline, ggsave, facet_wrap
 import statsmodels.formula.api as smf
 
 
@@ -97,7 +97,18 @@ def plotter(dataframe, x, y, title, x_axis_label, y_axis_label):
             geom_vline(xintercept=6.5, size=2)
     )
     
-    ggsave(plot=plot, filename='One Year Mortality Rate vs. Birth Rate.png', dpi=1000)
+    ggsave(plot=plot, filename='{}.png'.format(title), dpi=1000)
+
+mort = mortality_summary.melt(id_vars='bweight_bins', value_vars=['agedth5', 'agedth4']).rename(columns={'value': 'mean'})
+(ggplot(mort, aes('bweight_bins', 'mean')) +
+ geom_point() +
+ theme(axis_text_x=element_text(rotation=50, hjust=1)) +
+ labs(x='Birth Weight Bin',
+      y='Mortality Rate') +
+ geom_vline(xintercept=6.5, size=2) +
+ facet_wrap('variable')
+ )
+
 
 
 import matplotlib.pyplot as plt
