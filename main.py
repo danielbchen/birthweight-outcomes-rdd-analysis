@@ -29,6 +29,10 @@ def main():
             'Mean One-Year Mortality Rate by Birth Weight',
             'Birth Weight Bin (Grams)',
             'Mortality Rate')
+    plotter(mortality_summary, 'bweight_bins', 'agedth4',
+            'Mean 28-Day Mortality Rate by Birth Weight',
+            'Birth Weight Bin (Grams)',
+            'Mortality Rate')
 
 
 def birth_weight_loader():
