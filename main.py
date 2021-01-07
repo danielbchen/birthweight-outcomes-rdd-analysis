@@ -2,7 +2,7 @@ import numpy as np
 import os
 import pandas as pd
 # pip install plotnine
-from plotnine import ggplot, geom_point, aes, theme, element_text, labs, geom_vline
+from plotnine import ggplot, geom_point, aes, theme, element_text, labs, geom_vline, ggsave
 import statsmodels.formula.api as smf
 
 
@@ -97,7 +97,7 @@ def plotter(dataframe, x, y, title, x_axis_label, y_axis_label):
             geom_vline(xintercept=6.5, size=2)
     )
     
-    return plot
+    ggsave(plot=plot, filename='One Year Mortality Rate vs. Birth Rate.png', dpi=1000)
 
 
 import matplotlib.pyplot as plt
