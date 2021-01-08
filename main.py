@@ -150,18 +150,25 @@ def regression_column_creator(dataframe):
     return df
 
 
-def background_ols(dataframe):
-    """Runs OLS on background covariates to test for smoothness. Returns a 
-    dataframe with parameters from regression output.
+def run_rdd(dataframe, dep_vars, ind_vars, caliper):
+    """Runs and regression discontinuity via OLS given data, edogenous 
+    variable(s), exogenous variable(s), and a caliper. 
     """
 
     df = dataframe.copy()
 
-    df = df[(df['threshold_distance'] >= -85) & (df['threshold_distance'] <= 85)]
-    
-    background_covariates = ['mom_age', 'mom_ed1', 'gest', 'nprenatal', 'yob']
-    right_hand_side = ' ~ alpha_1 + alpha_2 + alpha_3'
-    formulas = [var + right_hand_side for var in background_covariates]
+    df = df[(df['threshold_distance'] >= (caliper * -1)) &
+            (df['threshold_distance'] <= caliper)]
 
-    regressions = [smf.ols(formula=formula, data=df).fit() for formula in formulas]
-    [regression.summary() for regression in regressions]
+    variables = dep_vars
+    right_hand_side = ' + '.join([var for var in ind_vars])
+    formulas = [var + ' ~ ' + right_hand_side for var in variables]
+
+    regressions = [smf.ols(formula=formula, data=df).fit()for formula in formulas]
+    print([regression.summary() for regression in regressions])
+
+
+background_ols(dataframe=df, 
+               dep_vars=['mom_age', 'mom_ed1', 'gest', 'nprenatal', 'yob'],
+               ind_vars=['alpha_1', 'alpha_2', 'alpha_3'],
+               caliper=85)
