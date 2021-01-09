@@ -150,6 +150,38 @@ def regression_column_creator(dataframe):
     return df
 
 
+def parameter_getter(list_object, parameter, n_regressors):
+    """Returns a list of specified parameters from a regression output. 
+    
+    Keyword arguments:
+    1) list_object must be a list of Regression Results Wrappers
+    2) parameter must be a string. 'coefficient' returns the estimated
+       betas for a regressor. 'standard error' returns the corrresponding 
+       standard errors. 'p-value' returns the corresponding p-values. 
+    3) n-regressors must be an integer representing the number of variables 
+       on the right hand side of the regression. 
+    """
+
+    if parameter == 'coefficient':
+        raw_values = [item.params for item in list_object]
+    elif parameter == 'standard error':
+        raw_values = [item.bse for item in list_object]
+    elif parameter == 'p-value':
+        raw_values = [item.pvalues for item in list_object]
+
+    values = []
+    for i in range(len(list_object)):
+        for x in range(n_regressors + 1):
+            values.append(raw_values[i][x])
+
+    indexes_to_drop = [number for number in range(len(values) + 1)]
+    indexes_to_drop = indexes_to_drop[0:len(indexes_to_drop) - 4:4]
+
+    parameters = np.delete(values, indexes_to_drop)
+
+    return parameters
+    
+
 def run_rdd(dataframe, dep_vars, ind_vars, caliper):
     """Runs and regression discontinuity via OLS given data, edogenous 
     variable(s), exogenous variable(s), and a caliper. 
@@ -165,10 +197,25 @@ def run_rdd(dataframe, dep_vars, ind_vars, caliper):
     formulas = [var + ' ~ ' + right_hand_side for var in variables]
 
     regressions = [smf.ols(formula=formula, data=df).fit()for formula in formulas]
-    print([regression.summary() for regression in regressions])
+    
+    dep_vars_col = [[var] * len(ind_vars) for var in dep_vars]
+    dep_vars_col = [var for sublist in dep_vars_col for var in sublist]
+    ind_vars_col = ind_vars * len(dep_vars)
+
+    results = pd.DataFrame({
+        'OUTCOME_VAR': dep_vars_col,
+        'IND_VAR': ind_vars_col,
+        'ESTIMATE': parameter_getter(regressions, 'coefficient', len(ind_vars)),
+        'STD_ERROR': parameter_getter(regressions, 'standard error', len(ind_vars)),
+        'P_VALUE': parameter_getter(regressions, 'p-value', len(ind_vars))
+    })
+
+    return results
 
 
-background_ols(dataframe=df, 
-               dep_vars=['mom_age', 'mom_ed1', 'gest', 'nprenatal', 'yob'],
-               ind_vars=['alpha_1', 'alpha_2', 'alpha_3'],
-               caliper=85)
+
+
+run_rdd(dataframe=df,
+        dep_vars=['mom_age', 'mom_ed1', 'gest', 'nprenatal', 'yob'],
+        ind_vars=['alpha_1', 'alpha_2', 'alpha_3'],
+        caliper=85)
