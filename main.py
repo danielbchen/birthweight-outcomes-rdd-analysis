@@ -222,3 +222,11 @@ def run_rdd(dataframe, dep_vars, ind_vars, caliper):
     })
 
     return results
+
+"""
+The issue with the function above is that there are binary variables that each
+produce a coefficient. For example, when we include the variable 'mom_race', we 
+don't only get one variable returned. Instead, we get a coefficient for both
+black and other, probably relative to the third option which gets automatically 
+dropped as a comparison group. 
+"""
