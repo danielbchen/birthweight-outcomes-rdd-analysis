@@ -171,8 +171,8 @@ def parameter_getter(list_object, parameter, n_regressors):
 
     values = []
     for i in range(len(list_object)):
-        for x in range(n_regressors + 1):
-            values.append(raw_values[i][x])
+        for j in range(n_regressors + 1):
+            values.append(raw_values[i][j])
 
     indexes_to_drop = [number for number in range(len(values) + 1)]
     indexes_to_drop = indexes_to_drop[0:len(indexes_to_drop) - 4:4]
