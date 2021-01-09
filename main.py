@@ -230,3 +230,17 @@ don't only get one variable returned. Instead, we get a coefficient for both
 black and other, probably relative to the third option which gets automatically 
 dropped as a comparison group. 
 """
+
+model = smf.ols(formula='agedth5 ~ alpha_1 + alpha_2 + alpha_3', data=df).fit()
+
+model.params[0]
+
+pd.DataFrame({
+    'ESTIMATES': model.params,
+    'P_VALUES': model.pvalues
+})
+
+"""
+In the example above, the estimates are returned and the name corresponding to 
+the estimate is the index. 
+"""
