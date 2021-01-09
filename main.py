@@ -63,7 +63,18 @@ def main():
             'Mean Year of Birth')
     # Run OLS on background characteristics
     df = regression_column_creator(df)
-    smoothness_test_df = background_ols(df)
+    background_discontinuity = run_rdd(dataframe=df,
+                                       dep_vars=['mom_age', 'mom_ed1',
+                                                 'gest', 'nprenatal', 'yob'],
+                                       ind_vars=['alpha_1',
+                                                 'alpha_2', 'alpha_3'],
+                                       caliper=85)
+    # Run OLS discontinuity on mortality outcomes
+    mortality_discontinuity = run_rdd(dataframe=df,
+                                      dep_vars=['agedth5', 'agedth4'],
+                                      ind_vars=['alpha_1',
+                                                'alpha_2', 'alpha_3'],
+                                      caliper=85)
 
 
 def birth_weight_loader():
@@ -211,11 +222,3 @@ def run_rdd(dataframe, dep_vars, ind_vars, caliper):
     })
 
     return results
-
-
-
-
-run_rdd(dataframe=df,
-        dep_vars=['mom_age', 'mom_ed1', 'gest', 'nprenatal', 'yob'],
-        ind_vars=['alpha_1', 'alpha_2', 'alpha_3'],
-        caliper=85)
