@@ -199,4 +199,17 @@ def run_rdd(dataframe, dep_vars, ind_vars, caliper):
                  .rename(columns={'index': 'EXOGENOUS_VARIABLE'})
     )
 
+    iterations = len(results['EXOGENOUS_VARIABLE'].unique())
+    exog_vars = [[var] * iterations for var in dep_vars]
+    exog_col = [var for sublist in exog_vars for var in sublist]
+    results['ENDOGENOUS_VARIABLE'] = exog_col
+
+    results = results[[
+        'ENDOGENOUS_VARIABLE',
+        'EXOGENOUS_VARIABLE',
+        'ESTIMATE',
+        'STD_ERROR',
+        'P_VALUE'
+    ]]
+
     return results
