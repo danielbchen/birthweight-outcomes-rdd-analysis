@@ -233,7 +233,7 @@ dropped as a comparison group.
 
 model = smf.ols(formula='agedth5 ~ alpha_1 + alpha_2 + alpha_3', data=df).fit()
 
-model.params[0]
+model.params
 
 pd.DataFrame({
     'ESTIMATES': model.params,
@@ -243,4 +243,47 @@ pd.DataFrame({
 """
 In the example above, the estimates are returned and the name corresponding to 
 the estimate is the index. 
+
 """
+
+dep_vars=['mom_age', 'mom_ed1','gest', 'nprenatal', 'yob']
+ind_vars=['alpha_1', 'alpha_2', 'alpha_3']
+caliper = 85
+variables = dep_vars
+
+df = df[(df['threshold_distance'] >= (caliper * -1)) &
+        (df['threshold_distance'] <= caliper)]
+right_hand_side = ' + '.join([var for var in ind_vars])
+formulas = [var + ' ~ ' + right_hand_side for var in variables]
+regressions = [smf.ols(formula=formula, data=df).fit()for formula in formulas]
+estimates = [regression.params for regression in regressions]
+
+regressions[0].params
+regressions[1].params
+
+test = pd.DataFrame({
+    'ESTIMATES': estimates
+})
+
+test['ESTIMATES'][0]
+
+test['ESTIMATES'].str.split('')
+
+test.to_csv('test.csv')
+
+test['ESTIMATES']
+0    Intercept    26.310251
+alpha_1       0.241361
+...
+1    Intercept    0.254670
+alpha_1     -0.002602
+al...
+2    Intercept    32.151642
+alpha_1      -0.128477
+...
+3    Intercept    8.903595
+alpha_1      0.089424
+al...
+4    Intercept    1992.738350
+alpha_1         0.589...
+Name: ESTIMATES, dtype: object

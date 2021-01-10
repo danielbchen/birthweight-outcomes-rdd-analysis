@@ -1,0 +1,26 @@
+,ESTIMATES
+0,"Intercept    26.310251
+alpha_1       0.241361
+alpha_2       0.001799
+alpha_3       0.003486
+dtype: float64"
+1,"Intercept    0.254670
+alpha_1     -0.002602
+alpha_2      0.000035
+alpha_3     -0.000123
+dtype: float64"
+2,"Intercept    32.151642
+alpha_1      -0.128477
+alpha_2       0.005786
+alpha_3       0.004670
+dtype: float64"
+3,"Intercept    8.903595
+alpha_1      0.089424
+alpha_2      0.003341
+alpha_3      0.003797
+dtype: float64"
+4,"Intercept    1992.738350
+alpha_1         0.589951
+alpha_2         0.005239
+alpha_3         0.008469
+dtype: float64"
