@@ -88,7 +88,7 @@ def main():
         'gest_wks2',      'gest_wks3',       'nprenatal_1',    'nprenatal_2', 
         'nprenatal_3'
     ]
-    mortality_rdd_covaraites = run_rdd(dataframe=df,
+    mortality_rdd_covaraites = run_rdd(dataframe=dummies_df,
                                        dep_vars=['agedth5', 'agedth4'],
                                        ind_vars=covariates,
                                        caliper=85)
