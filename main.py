@@ -158,6 +158,8 @@ def regression_column_creator(dataframe):
     df['alpha_2'] = df['alpha_1'] * df['threshold_distance']
     df['alpha_3'] = (1 - df['alpha_1']) * (df['threshold_distance'])
 
+    df = pd.get_dummies(df, columns=['yob'])
+
     return df
 
 
