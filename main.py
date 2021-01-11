@@ -158,7 +158,7 @@ def regression_column_creator(dataframe):
     df['alpha_2'] = df['alpha_1'] * df['threshold_distance']
     df['alpha_3'] = (1 - df['alpha_1']) * (df['threshold_distance'])
 
-    df = pd.get_dummies(df, columns=['yob'])
+    df = pd.get_dummies(df, columns=['yob', 'mom_race'])
 
     return df
 
@@ -215,3 +215,21 @@ def run_rdd(dataframe, dep_vars, ind_vars, caliper):
     ]]
 
     return results
+
+
+covariates = [
+    'alpha_1',    'alpha_2',     'alpha_3',     'mom_age', 
+    'mom_ed1',    'mom_ed2',     'mom_ed3',     'mom_ed4', 
+    'mom_race_white', 'mom_race_black',  'mom_race_other', 'yob_1984',    'yob_1985', 
+    'yob_1986',   'yob_1987',    'yob_1988',    'yob_1989', 
+    'yob_1990',   'yob_1991',    'yob_1995',    'yob_1996', 
+    'yob_1997',   'yob_1998',    'yob_1999',    'yob_2000', 
+    'yob_2001',   'yob_2002',    'gest_wks1',   'gest_wks2', 
+    'gest_wks3',  'nprenatal_1', 'nprenatal_2', 'nprenatal_3'
+]
+
+
+run_rdd(dataframe=df,
+        dep_vars=['agedth5', 'agedth4'],
+        ind_vars=covariates,
+        caliper=85)
