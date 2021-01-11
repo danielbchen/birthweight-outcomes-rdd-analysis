@@ -76,6 +76,7 @@ def main():
                                                 'alpha_2', 'alpha_3'],
                                       caliper=85)
     # Run RDD with background covariates
+    dummies_df = pd.get_dummies(df, columns=['yob', 'mom_race'])
     covariates = [
         'alpha_1',        'alpha_2',         'alpha_3',        'mom_age',
         'mom_ed1',        'mom_ed2',         'mom_ed3',        'mom_ed4',
@@ -173,8 +174,6 @@ def regression_column_creator(dataframe):
     df['threshold_distance'] = df['bweight'] - 1500
     df['alpha_2'] = df['alpha_1'] * df['threshold_distance']
     df['alpha_3'] = (1 - df['alpha_1']) * (df['threshold_distance'])
-
-    df = pd.get_dummies(df, columns=['yob', 'mom_race'])
 
     return df
 
