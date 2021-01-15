@@ -559,7 +559,7 @@ yearly_plot, monthly_plot
 
 
 
-![png](output_17_1.png)
+![png](https://github.com/danielbchen/birthweight-outcomes-rdd-analysis/blob/main/28-Day%20Mortality%20x%20Birth%20Weight.png)
 
 
 
@@ -760,23 +760,23 @@ mom_age_plot, mom_hs_ed_plot, gestation_plot, prenatal_plot, yob_plot
 ```
 
 
-![png](output_24_0.png)
+![png](https://github.com/danielbchen/birthweight-outcomes-rdd-analysis/blob/main/Mom%20Age%20x%20Birth%20Weight.png)
 
 
 
-![png](output_24_1.png)
+![png](https://github.com/danielbchen/birthweight-outcomes-rdd-analysis/blob/main/Mother%20Ed%20%3C%20HS%20x%20Birth%20Weight.png)
 
 
 
-![png](output_24_2.png)
+![png](https://github.com/danielbchen/birthweight-outcomes-rdd-analysis/blob/main/Gestational%20Age%20x%20Birth%20Weight.png)
 
 
 
-![png](output_24_3.png)
+![png](https://github.com/danielbchen/birthweight-outcomes-rdd-analysis/blob/main/Pre-Natal%20x%20Birth%20Weight.png)
 
 
 
-![png](output_24_4.png)
+![png](https://github.com/danielbchen/birthweight-outcomes-rdd-analysis/blob/main/Birth%20Year%20x%20Birth%20Weight.png)
 
 
 
