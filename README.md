@@ -791,20 +791,20 @@ From the plots above, gestational age and number of prenatal care visits show sm
 
 After glancing at the plots, it appears that there is discontinuity around the 1500 gram threshold. We can empirically test if this is actually the case by estimating the following regression: 
 
-$B_i = a_0 + a_1VLBW + a_2VLBW_i(g_i - 1500) + a_3(1 - VLBW_i)(g_i - 1500) + e_i$
+B<sub>i</sub> = a<sub>0</sub> + a<sub>1</sub>VLBW + a<sub>2</sub>VLBW<sub>i</sub>(g<sub>i</sub> - 1500) + a<sub>3</sub>(1 - VLBW<sub>i</sub>)(g<sub>i</sub> - 1500) + e<sub>i</sub>
 
 where:
-- $B_i$ is the background covariate
-- $VLBW_i$ is a binary indicator for whether or not a newborn is classified as very low birth weight (strictly less than 1500 grams)
-- $g_i$ is the birth weight
-- $e_i$ is the error term
+- B<sub>i</sub> is the background covariate
+- VLBW<sub>i</sub> is a binary indicator for whether or not a newborn is classified as very low birth weight (strictly less than 1500 grams)
+- g<sub>i</sub> is the birth weight
+- e<sub>i</sub> is the error term
 
 and the coefficient:
-- $a_1$ measures the gap of the discontinuity, if any
-- $a_2$ is the slope of the line for newborns categorized as very low birth weight. When VLBW is "activated" or equal to 1, our equation simplifies to $a_0 + a_1 + a_2(g_i - 1500)$ with $a_0$ and $a_1$ being constants and $g_i - 1500$ being a transformation of our running variable, birth weight (the independent variable), we are basically left with a line in the form of $Y = mx + b$.
-- $a_3$ is the slope of the line for newborns not categorized as very low birth weight. When VLBW is not "activated' or equal to 0 our equation simplifies to $a_0 + a_3(g_i - 1500)$. Again, this is simply a linear line.
+- a<sub>1</sub> measures the gap of the discontinuity, if any
+- a<sub>2</sub> is the slope of the line for newborns categorized as very low birth weight. When VLBW is "activated" or equal to 1, our equation simplifies to a<sub>0</sub> + a<sub>1</sub> + a<sub>2</sub>(g<sub>i</sub> - 1500) with a<sub>0</sub> and a<sub>1</sub> being constants and g<sub>i</sub> - 1500 being a transformation of our running variable, birth weight (the independent variable), we are basically left with a line in the form of Y = *m*x + b.
+- a<sub>3</sub> is the slope of the line for newborns not categorized as very low birth weight. When VLBW is not "activated' or equal to 0 our equation simplifies to a<sub>0</sub> + a<sub>3</sub>(g_i - 1500). Again, this is simply a linear line.
 
-Note how the difference in the simplified equations in bullet three and four are nearly identical. The assuming that $a_2$ and $a_3$ are identical, the only difference between the two reduced equations is $a_1$ which consequently must be the jump from the line with $a_2$ as the slope to the line with $a_3$ as the slope.
+Note how the difference in the simplified equations in bullet three and four are nearly identical. The assuming that a<sub>2</sub> and a<sub>3</sub> are identical, the only difference between the two reduced equations is a<sub>1</sub> which consequently must be the jump from the line with a<sub>2</sub> as the slope to the line with a<sub>3</sub> as the slope.
 
 The following functions below will derive columns for the regressors and return a dataframe summarizing the regression output from statsmodels.
 
