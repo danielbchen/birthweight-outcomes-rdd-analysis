@@ -555,7 +555,7 @@ yearly_plot, monthly_plot
 ```
 
 
-![png](output_17_0.png)
+![png](https://github.com/danielbchen/birthweight-outcomes-rdd-analysis/blob/main/One-Year%20Mortality%20x%20Birth%20Weight.png)
 
 
 
