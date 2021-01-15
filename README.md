@@ -802,7 +802,7 @@ where:
 and the coefficient:
 - a<sub>1</sub> measures the gap of the discontinuity, if any
 - a<sub>2</sub> is the slope of the line for newborns categorized as very low birth weight. When VLBW is "activated" or equal to 1, our equation simplifies to a<sub>0</sub> + a<sub>1</sub> + a<sub>2</sub>(g<sub>i</sub> - 1500) with a<sub>0</sub> and a<sub>1</sub> being constants and g<sub>i</sub> - 1500 being a transformation of our running variable, birth weight (the independent variable), we are basically left with a line in the form of Y = *m*x + b.
-- a<sub>3</sub> is the slope of the line for newborns not categorized as very low birth weight. When VLBW is not "activated' or equal to 0 our equation simplifies to a<sub>0</sub> + a<sub>3</sub>(g_i - 1500). Again, this is simply a linear line.
+- a<sub>3</sub> is the slope of the line for newborns not categorized as very low birth weight. When VLBW is not "activated' or equal to 0 our equation simplifies to a<sub>0</sub> + a<sub>3</sub>(g<sub>i</sub> - 1500). Again, this is simply a linear line.
 
 Note how the difference in the simplified equations in bullet three and four are nearly identical. The assuming that a<sub>2</sub> and a<sub>3</sub> are identical, the only difference between the two reduced equations is a<sub>1</sub> which consequently must be the jump from the line with a<sub>2</sub> as the slope to the line with a<sub>3</sub> as the slope.
 
@@ -1053,9 +1053,9 @@ As a reminder, if there are discontinuities through the threshold, then our smoo
 
 The section above measured the size of the discontinuity with the background covariates as the outcome variable. In this section, we use an identical right-hand side expression, but now the outcome variables are the two measures of mortality rates. We estimate the discontinuity using the regression:
 
-$Y_i = a_0 + a_1VLBW + a_2VLBW_i(g_i - 1500) + a_3(1 - VLBW_i)(g_i - 1500) + e_i$
+Y<sub>i</sub> = a<sub>0</sub> + a<sub>1</sub>VLBW + a<sub>2</sub>VLBW<sub>i</sub>(g<sub>i</sub> - 1500) + a<sub>3</sub>(1 - VLBW<sub>i</sub>)(g<sub>i</sub> - 1500) + e<sub>i</sub>
 
-where $Y_i$ is either the one-year mortality rate or the 28-day mortality rate.
+where Y<sub>i</sub> is either the one-year mortality rate or the 28-day mortality rate.
 
 
 ```python
